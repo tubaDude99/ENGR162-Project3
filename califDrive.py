@@ -1,13 +1,19 @@
 # califDrive.py
-import time
 
 class Motor:
-    def __init__(self, BP, port, direction):
+    def __init__(self, BP, port, direction, maxPower = 100):
         self.BP = BP
         self.port = port
         self.direction = direction
+        self.maxPower = maxPower
     def setPower(self, power):
+        if power > self.maxPower:
+            power = self.maxPower
+        elif power < -self.maxPower:
+            power = -self.maxPower
         self.BP.set_motor_power(self.port, power * self.direction)
+    def setPosition(self, position):
+        self.BP.set_motor_position(self.port, position)
     def getPosition(self):
         return self.BP.get_motor_encoder(self.port)
     def resetEncoder(self):
