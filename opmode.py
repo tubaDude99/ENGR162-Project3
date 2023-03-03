@@ -12,7 +12,7 @@ RIGHT_ULTRASONIC_PORT = 2
 FRONT_ULTRASONIC_PORT = 3
 
 BP = brickpi3.BrickPi3()
-leftMotor = califDrive.Motor(BP, BP.PORT_A, 1)
+leftMotor = califDrive.Motor(BP, BP.PORT_A, -1)
 rightMotor = califDrive.Motor(BP, BP.PORT_D, -1)
 califDrive = califDrive.CalifDrive(BP, leftMotor, rightMotor)
 

@@ -1,0 +1,16 @@
+forward,.1
+forward,-.1
+forward,.2
+forward,-.2
+forward,.3
+forward,-.3
+forward,.4
+forward,-.4
+turn,90
+turn,-90
+turn,180
+turn,-180
+turn,270
+turn,-270
+turn,360
+turn,-360

@@ -17,8 +17,8 @@ leftMotor = califDrive.Motor(BP, BP.PORT_A, 1)
 rightMotor = califDrive.Motor(BP, BP.PORT_D, -1)
 califDrive = califDrive.CalifDrive(BP, leftMotor, rightMotor)
 
-wheelBase = .13
-wheelRad = .065 / 2
+wheelBase = .151
+wheelRad = .069 / 2
 delay = .02
 
 pos = Vector2()

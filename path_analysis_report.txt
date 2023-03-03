@@ -1,0 +1,224 @@
+Group number 1
+	Timing:
+		Start time: 0.0013
+		End time: 0.5583
+		Total duration: 0.557
+	Left Wheel:
+		Starting position: 186
+		Ending position: 352
+		Total traverse: 166
+	Right Wheel:
+		Starting position: 88
+		Ending position: 254
+		Total traverse: 166
+
+Group number 2
+	Timing:
+		Start time: 5.0186
+		End time: 5.5861
+		Total duration: 0.5674999999999999
+	Left Wheel:
+		Starting position: 352
+		Ending position: 185
+		Total traverse: -167
+	Right Wheel:
+		Starting position: 255
+		Ending position: 87
+		Total traverse: -168
+
+Group number 3
+	Timing:
+		Start time: 10.031
+		End time: 11.0407
+		Total duration: 1.0096999999999987
+	Left Wheel:
+		Starting position: 185
+		Ending position: 517
+		Total traverse: 332
+	Right Wheel:
+		Starting position: 87
+		Ending position: 419
+		Total traverse: 332
+
+Group number 4
+	Timing:
+		Start time: 15.0434
+		End time: 16.0408
+		Total duration: 0.9974000000000007
+	Left Wheel:
+		Starting position: 517
+		Ending position: 184
+		Total traverse: -333
+	Right Wheel:
+		Starting position: 419
+		Ending position: 86
+		Total traverse: -333
+
+Group number 5
+	Timing:
+		Start time: 20.059
+		End time: 21.5078
+		Total duration: 1.4487999999999985
+	Left Wheel:
+		Starting position: 184
+		Ending position: 682
+		Total traverse: 498
+	Right Wheel:
+		Starting position: 87
+		Ending position: 585
+		Total traverse: 498
+
+Group number 6
+	Timing:
+		Start time: 25.0689
+		End time: 26.477
+		Total duration: 1.408100000000001
+	Left Wheel:
+		Starting position: 682
+		Ending position: 183
+		Total traverse: -499
+	Right Wheel:
+		Starting position: 586
+		Ending position: 87
+		Total traverse: -499
+
+Group number 7
+	Timing:
+		Start time: 30.0865
+		End time: 31.9879
+		Total duration: 1.9013999999999989
+	Left Wheel:
+		Starting position: 183
+		Ending position: 847
+		Total traverse: 664
+	Right Wheel:
+		Starting position: 87
+		Ending position: 751
+		Total traverse: 664
+
+Group number 8
+	Timing:
+		Start time: 35.0974
+		End time: 36.913
+		Total duration: 1.8155999999999963
+	Left Wheel:
+		Starting position: 847
+		Ending position: 182
+		Total traverse: -665
+	Right Wheel:
+		Starting position: 751
+		Ending position: 86
+		Total traverse: -665
+
+Group number 9
+	Timing:
+		Start time: 40.1075
+		End time: 40.7507
+		Total duration: 0.6432000000000002
+	Left Wheel:
+		Starting position: 182
+		Ending position: 371
+		Total traverse: 189
+	Right Wheel:
+		Starting position: 85
+		Ending position: -103
+		Total traverse: -188
+
+Group number 10
+	Timing:
+		Start time: 45.1213
+		End time: 45.7956
+		Total duration: 0.6743000000000023
+	Left Wheel:
+		Starting position: 372
+		Ending position: 182
+		Total traverse: -190
+	Right Wheel:
+		Starting position: -105
+		Ending position: 84
+		Total traverse: 189
+
+Group number 11
+	Timing:
+		Start time: 50.1449
+		End time: 51.3767
+		Total duration: 1.2317999999999998
+	Left Wheel:
+		Starting position: 181
+		Ending position: 562
+		Total traverse: 381
+	Right Wheel:
+		Starting position: 85
+		Ending position: -295
+		Total traverse: -380
+
+Group number 12
+	Timing:
+		Start time: 55.1603
+		End time: 56.4115
+		Total duration: 1.2511999999999972
+	Left Wheel:
+		Starting position: 562
+		Ending position: 181
+		Total traverse: -381
+	Right Wheel:
+		Starting position: -296
+		Ending position: 85
+		Total traverse: 381
+
+Group number 13
+	Timing:
+		Start time: 60.1898
+		End time: 61.9599
+		Total duration: 1.7700999999999993
+	Left Wheel:
+		Starting position: 180
+		Ending position: 751
+		Total traverse: 571
+	Right Wheel:
+		Starting position: 85
+		Ending position: -484
+		Total traverse: -569
+
+Group number 14
+	Timing:
+		Start time: 65.2218
+		End time: 66.9819
+		Total duration: 1.7600999999999942
+	Left Wheel:
+		Starting position: 751
+		Ending position: 181
+		Total traverse: -570
+	Right Wheel:
+		Starting position: -486
+		Ending position: 84
+		Total traverse: 570
+
+Group number 15
+	Timing:
+		Start time: 70.2367
+		End time: 72.5753
+		Total duration: 2.3385999999999996
+	Left Wheel:
+		Starting position: 179
+		Ending position: 941
+		Total traverse: 762
+	Right Wheel:
+		Starting position: 85
+		Ending position: -676
+		Total traverse: -761
+
+Group number 16
+	Timing:
+		Start time: 75.2646
+		End time: 77.5754
+		Total duration: 2.3108000000000004
+	Left Wheel:
+		Starting position: 941
+		Ending position: 181
+		Total traverse: -760
+	Right Wheel:
+		Starting position: -677
+		Ending position: 84
+		Total traverse: 761
+
