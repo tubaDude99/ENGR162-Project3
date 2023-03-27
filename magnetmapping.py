@@ -1,30 +1,4 @@
-# Activity 8.1.1: Design Challenge 2
-# File: DC2_Code_Team100.py
-# Date: 2 February 2023
-# By:   Nathan Battle
-#       battle6
-#       Mazen Sheppard
-#       sheppar7
-#       Christopher Baron
-#       baronc
-#       Vishu Pancholi
-#       vpanchol
-# Section: 4
-# Team: 81
-#
-# ELECTRONIC SIGNATURE
-# Nathan Battle
-# Mazen Sheppard
-# Chistopher Baron
-# Vishuddha Pancholi
-#
-# The electronic signature above indicates that the program
-# submitted for evaluation is my individual work. I have
-# a general understanding of all aspects of its development
-# and execution.
-#
-# Uses accelerometer reading to balance a platform and keep it level
-
+# magnetmapping.py
 
 from MPU9250 import MPU9250
 import sys
@@ -66,12 +40,6 @@ count = 3 #Number of standard deviations used for filtering
 
 t0=time.time()
 
-BP.offset_motor_encoder(BP.PORT_A, BP.get_motor_encoder(BP.PORT_A))
-BP.offset_motor_encoder(BP.PORT_D, BP.get_motor_encoder(BP.PORT_D))
-
-aOffset = 0
-dOffset = 0
-
 p = .1
 
 delay = .02
@@ -87,10 +55,7 @@ try:
         out[6]=InvGaussFilter(adv,state[1][6], biases[6],std[6],count)
         out[7]=InvGaussFilter(adv,state[1][7], biases[7],std[7],count)
         out[8]=InvGaussFilter(adv,state[1][8], biases[8],std[8],count)
-        aOffset += out[0] * p
-        dOffset += out[1] * p
-        BP.set_motor_position(BP.PORT_A, aOffset)
-        BP.set_motor_position(BP.PORT_D, dOffset)
+        print(out)
         time.sleep(delay)  # delay for 0.02 seconds (20ms) to reduce the Raspberry Pi CPU load.
 except KeyboardInterrupt:
     print("Program forcibly terminated")

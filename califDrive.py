@@ -44,10 +44,11 @@ class CalifDrive:
     def driveDistance(self, distance):
         leftPos = self.leftMotor.getPosition()
         rightPos = self.rightMotor.getPosition()
+        distance /= 100
         angleDelta = 360 * distance / (self.wheelDia * math.pi)
         self.leftMotor.setPosition(leftPos + angleDelta)
         self.rightMotor.setPosition(rightPos + angleDelta)
-        return angleDelta*.0027 + .4
+        return abs(angleDelta*.0027) + .4
     def turnSpeed(self, power):
         self.leftMotor.setPower(-power)
         self.rightMotor.setPower(power)
@@ -57,4 +58,4 @@ class CalifDrive:
         rightPos = self.rightMotor.getPosition()
         self.leftMotor.setPosition(leftPos+angleDelta)
         self.rightMotor.setPosition(rightPos-angleDelta)
-        return angleDelta*.0029 + .4
+        return abs(angleDelta*.0029) + .4
