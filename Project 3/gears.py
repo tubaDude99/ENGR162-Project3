@@ -13,8 +13,8 @@ def angleVector(theta):
     return Vector2(math.cos(theta), -math.sin(theta))
 
 BP = brickpi3.BrickPi3()
-leftMotor = califDrive.Motor(BP, BP.PORT_A, 1)
-rightMotor = califDrive.Motor(BP, BP.PORT_D, -1)
+leftMotor = califDrive.Motor(BP, BP.PORT_A, -1, 30)
+rightMotor = califDrive.Motor(BP, BP.PORT_D, -1, 30)
 califDrive = califDrive.CalifDrive(BP, leftMotor, rightMotor)
 
 wheelBase = .151

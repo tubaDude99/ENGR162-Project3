@@ -20,13 +20,15 @@ class Motor:
         self.BP.set_motor_limits(self.port, maxPower)
     def setPosition(self, position):
         self.BP.set_motor_position(self.port, position*self.direction)
+    def setSpeed(self, speed):
+        self.BP.set_motor_dps(self.port, speed*self.direction)
     def getPosition(self):
         return self.direction * self.BP.get_motor_encoder(self.port)
     def resetEncoder(self):
         self.BP.offset_motor_encoder(self.port, self.getPosition())
 
 class CalifDrive:
-    def __init__(self, BP, leftMotor, rightMotor, turnRatio=2.118, wheelDia=.069):
+    def __init__(self, BP, leftMotor, rightMotor, turnRatio=2, wheelDia=.069):
         self.BP = BP
         self.leftMotor = leftMotor
         self.rightMotor = rightMotor
@@ -42,6 +44,7 @@ class CalifDrive:
         self.leftMotor.setPower(leftPower)
         self.rightMotor.setPower(rightPower)
     def driveDistance(self, distance):
+        # Takes a distance in centimeters and sets the robot to drive that distance, then returns the expected time
         leftPos = self.leftMotor.getPosition()
         rightPos = self.rightMotor.getPosition()
         distance /= 100
@@ -49,6 +52,9 @@ class CalifDrive:
         self.leftMotor.setPosition(leftPos + angleDelta)
         self.rightMotor.setPosition(rightPos + angleDelta)
         return abs(angleDelta*.0027) + .4
+    def driveSpeed(self, speed):
+        self.leftMotor.setSpeed(speed)
+        self.rightMotor.setSpeed(speed)
     def turnSpeed(self, power):
         self.leftMotor.setPower(-power)
         self.rightMotor.setPower(power)
