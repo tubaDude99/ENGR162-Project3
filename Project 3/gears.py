@@ -48,6 +48,23 @@ std=FindSTD(biases,mpu,deltaLy)
 pick = 2
 count = 3
 
+print("\nEstablishing IMU baseline")
+baseline = [0,0,0,0,0,0,0,0,0]
+for i in range(50):
+    state=KalmanFilter(mpu,state,flter,deltaLy)
+    baseline[0]+=InvGaussFilter(adv,state[1][0], biases[0],std[0],count)/50
+    baseline[1]+=InvGaussFilter(adv,state[1][1], biases[1],std[1],count)/50
+    baseline[2]+=InvGaussFilter(adv,state[1][2], biases[2],std[2],count)/50
+    baseline[3]+=InvGaussFilter(adv,state[1][3], biases[3],std[3],count)/50
+    baseline[4]+=InvGaussFilter(adv,state[1][4], biases[4],std[4],count)/50
+    baseline[5]+=InvGaussFilter(adv,state[1][5], biases[5],std[5],count)/50
+    baseline[6]+=InvGaussFilter(adv,state[1][6], biases[6],std[6],count)/50
+    baseline[7]+=InvGaussFilter(adv,state[1][7], biases[7],std[7],count)/50
+    baseline[8]+=InvGaussFilter(adv,state[1][8], biases[8],std[8],count)/50
+    time.sleep(.02)
+print("Baseline Established:")
+print("%f.2, %f.2, %f.2, %f.2, %f.2, %f.2, %f.2, %f.2, %f.2" %(baseline[0],baseline[1],baseline[2],baseline[3],baseline[4],baseline[5],baseline[6],baseline[7],baseline[8]))
+
 BP = brickpi3.BrickPi3()
 leftMotor = califDrive.Motor(BP, BP.PORT_A, -1, 30)
 rightMotor = califDrive.Motor(BP, BP.PORT_D, -1, 30)
@@ -56,9 +73,11 @@ if CARGO:
     BP.set_motor_power(BP.PORT_B, 0)
 
 FRONT_LEFT_ULTRASONIC_PORT = 4
-REAR_LEFT_ULTRASONIC_PORT = 2
+REAR_LEFT_ULTRASONIC_PORT = 3
+INFRARED_SENSOR_PORT = 0
 FRONT_ULTRASONIC_PORT = BP.PORT_1
 sensorWidth = 15.9
+grovepi.pinMode(INFRARED_SENSOR_PORT,"INPUT")
 BP.set_sensor_type(FRONT_ULTRASONIC_PORT, BP.SENSOR_TYPE.NXT_ULTRASONIC)
 try:
     print(BP.get_sensor(FRONT_ULTRASONIC_PORT))
@@ -77,13 +96,42 @@ prevW = 0
 prevTheta = 0
 x = 0
 
+hazardList = []
+
 threshold = 30
-xsize = 10
+xsize = 20
 ysize = xsize
 history = [[-1 for i in range(xsize)] for j in range(ysize)]
 visitCounter = 1
 headingGlobal = 0 # N=-1, E=0, S=1, W=2/-2
 
+def hazardScan():
+    global hazardList
+    global state
+    magThreshold = 10
+    irThreshold = 120
+    
+    state=KalmanFilter(mpu,state,flter,deltaLy)
+    magz=InvGaussFilter(adv,state[1][8], biases[8],std[8],count)
+    if abs(magz - baseline[8]) > magThreshold:
+        if VERBOSE:
+            print("Magnetic Hazard Detected")
+        hazardPos = pos.add(angleVector(-headingGlobal * math.pi / 2).multiply(forward))
+        hazardList.append([hazardPos.x, hazardPos.y, abs(magz - baseline[8]), "magnet"])
+        return 1
+    irReading = 0
+    try:
+        irReading = grovepi.analogRead(INFRARED_SENSOR_PORT)
+    except Exception as e:
+        print(e)
+    if irReading > irThreshold:
+        if VERBOSE:
+            print("Infrared Hazard Detected")
+        hazardPos = pos.add(angleVector(-headingGlobal * math.pi / 2).multiply(forward))
+        hazardList.append([hazardPos.x, hazardPos.y, irReading, "fire"])
+        return 2
+    return 0
+        
 def turnRobot(turn):
     global state
     global theta
@@ -92,12 +140,11 @@ def turnRobot(turn):
     
     turn = ((turn+180)%360)-180
     if VERBOSE:
-        if(turn == 90):
-            print("\nRIGHT TURN")
-        elif(turn == -90):
-            print("\nLEFT TURN")
+        if(turn > 0):
+            print("\nTURN RIGHT", turn)
+        elif(turn < 0):
+            print("\nTURN LEFT", turn)
         print("Start Heading:", theta)
-    
     waitTime = califDrive.turnAngle(turn)
     time0 = time.time()
     prevTime = time0 - delay
@@ -122,11 +169,11 @@ def turnRobot(turn):
         prevTheta = theta
         
         time.sleep(delay)
+    if VERBOSE:
+        print("End Heading:", theta)
 
 turn = 0
 forward = 0
-
-#prevTime = time.time() - delay
 
 try:
     input("Press ENTER to start")
@@ -152,17 +199,18 @@ try:
         
         turn = 0
         forward = 0
+        headingGlobal = ((headingGlobal+2)%4)-2
         
         if xGrid == 0 and yGrid == 0:
             if VERBOSE:
                 print("STARTING SQUARE")
-            if history[0][1] >= history[1][0]:
-                headingTarget = 0 #turn to face east (towards 1,0)
-                turn = (90*(headingTarget-headingGlobal))%360
+            if history[0][1] < history[1][0]:
+                headingTarget = 1 #turn to face south (towards 0,1)
+                turn = 90*(headingTarget-headingGlobal)
                 forward = 40
             else:
-                headingTarget = 1 #turn to face south (towards 0,1)
-                turn = (90*(headingTarget-headingGlobal))%360
+                headingTarget = 0 #turn to face east (towards 1,0)
+                turn = 90*(headingTarget-headingGlobal)
                 forward = 40
         elif leftDist < threshold and frontDist > threshold: #just left wall
             if VERBOSE:
@@ -210,7 +258,9 @@ try:
             headingTarget = headingGlobal + 1
             turn = 90
         elif leftDist > threshold and frontDist > threshold: #no walls
-            headingGlobal = ((headingGlobal+2)%4)-2 #normalize global heading by setting -2 to 2 (west to west)
+            if VERBOSE:
+                print("NO WALLS")
+            headingGlobal = ((headingGlobal+2)%4)-2 #normalize global heading by setting 2 to -2 (west to west)
             headingTarget = headingGlobal - 1
             turn = -90
             forward = 40
@@ -225,6 +275,7 @@ try:
             print("forward", forward)
         
         if turn != 0:
+            turnRobot(turn)
             '''turn = ((turn+180)%360)-180
             if VERBOSE:
                 if(turn == 90):
@@ -261,8 +312,14 @@ try:
             headingGlobal = headingTarget
             headingGlobal = ((headingGlobal+2)%4)-2
             
-            if VERBOSE:
-                print("End Heading:", theta)
+        hazard = hazardScan()
+        if hazard:
+            if turn == 90:
+                turn = 180
+            turnRobot(turn)
+            headingGlobal += round(turn/90)
+            headingGlobal = ((headingGlobal+2)%4)-2
+            forward = 0
         if forward != 0:
             if VERBOSE:
                 print("STRAIGHT")
@@ -281,7 +338,7 @@ try:
             if VERBOSE:
                 print("X Distance:", x)
         
-        time.sleep(3)
+        time.sleep(6)
 except KeyboardInterrupt:
     print("Program forcibly terminated")
     if CARGO:
