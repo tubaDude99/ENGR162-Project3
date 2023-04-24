@@ -22,6 +22,7 @@ path = []
 for line in pathLines:
     line = line.split(',')
     path.append([line[0], float(line[1])])
+
 i = 1
 zeroTime = time.time()
 try:

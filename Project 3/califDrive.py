@@ -55,6 +55,9 @@ class CalifDrive:
     def driveSpeed(self, speed):
         self.leftMotor.setSpeed(speed)
         self.rightMotor.setSpeed(speed)
+    def driveDiffSpeed(self, lSpeed, rSpeed):
+        self.leftMotor.setSpeed(lSpeed)
+        self.rightMotor.setSpeed(rSpeed)
     def turnSpeed(self, power):
         self.leftMotor.setPower(-power)
         self.rightMotor.setPower(power)
