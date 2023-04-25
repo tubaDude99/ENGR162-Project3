@@ -8,7 +8,7 @@ import califDrive
 BP = brickpi3.BrickPi3()
 leftMotor = califDrive.Motor(BP, BP.PORT_A, -1, 30)
 rightMotor = califDrive.Motor(BP, BP.PORT_D, -1, 30)
-califDrive = califDrive.CalifDrive(BP, leftMotor, rightMotor)
+califDrive = califDrive.CalifDrive(BP, leftMotor, rightMotor, 2)
 
 #BP.offset_motor_encoder(BP.PORT_A, BP.get_motor_encoder(BP.PORT_A))
 #BP.offset_motor_encoder(BP.PORT_D, BP.get_motor_encoder(BP.PORT_D))
@@ -22,7 +22,7 @@ print()
 startAngle = 0
 targetAngle = 360
 
-R = 2.118
+#R = 2.118
 #targetAngle *= R
 try:
     waitTime = califDrive.turnAngle(targetAngle)
