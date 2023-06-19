@@ -145,7 +145,7 @@ def hazardScan():
         hazardList.append([hazardPos.x, hazardPos.y, irReading, "fire", "Temperature (F)"])
         return 2
     return 0
-        
+
 def turnRobot(turn):
     global state
     global thetaActual
@@ -309,17 +309,6 @@ try:
         if forward != 0:
             if VERBOSE:
                 print("STRAIGHT")
-            '''waitTime = califDrive.driveDistance(forward)
-            prevL = leftMotor.getPosition()
-            prevR = rightMotor.getPosition()
-            time0 = time.time()
-            while time.time() < time0 + waitTime:
-                L = leftMotor.getPosition()
-                R = rightMotor.getPosition()
-                deltaL = wheelDia * (L - prevL) * math.pi / 360
-                deltaR = wheelDia * (R - prevR) * math.pi / 360
-                dx = avg(deltaL,deltaR)
-                x += dx'''
             angleDelta = .95 * 360 * forward / (100 * wheelDia * math.pi)
             rDelta = angleDelta
             lDelta = angleDelta
@@ -332,10 +321,7 @@ try:
             prevR = rStart
             
             time0 = time.time()
-            prevTime = time0 - delay
             while abs(rDelta) > 40 and abs(lDelta) > 40:
-                dTime = time.time() - prevTime
-                prevTime = time.time()
                 if speed < maxDPS:
                     speed += 20
                 califDrive.driveSpeed(speed * direction)
@@ -346,14 +332,6 @@ try:
                 deltaR = wheelDia * (R - prevR) * math.pi / 360
                 dx = avg(deltaL,deltaR)
                 x += dx
-                
-                '''state=KalmanFilter(mpu,state,flter,deltaLy)
-                w = InvGaussFilter(adv,state[1][5], biases[5],std[5],count)
-                
-                thetaActual = prevTheta + avg(-(out[5]-baseline[5]), prevW) * dTime
-                
-                prevW = -(w-baseline[5])
-                prevTheta = thetaActual'''
                 
                 prevL = L
                 prevR = R
